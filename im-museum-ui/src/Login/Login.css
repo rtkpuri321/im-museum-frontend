@@ -1,0 +1,92 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: lightblue;
+  }
+  
+  .login-form {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  input[type='text'],
+  input[type='password'] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #bd081c; /* Pinterest red color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #7f0e17; /* Darker shade of Pinterest red on hover */
+  }
+
+  #header {
+    background-color: #1a1a1a; /* Dark background color */
+    color: #ffffff; /* White text color */
+    padding: 20px; /* Add padding for spacing */
+    text-align: center; /* Center-align the content */
+    font-family: 'Arial', sans-serif; /* Choose a suitable font family */
+  }
+  
+  #header h1 {
+    font-size: 48px; /* Adjust the font size for the heading */
+    margin: 0; /* Remove default margin */
+    text-transform: uppercase; /* Convert text to uppercase */
+    letter-spacing: 2px; /* Add spacing between letters */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for effect */
+  }
+  
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .login-options {
+    margin-top: 20px;
+  }
+  
+  .register-button,
+  .google-login-button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .google-login-button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .google-login-button i {
+    margin-right: 10px;
+  }
+  
+  

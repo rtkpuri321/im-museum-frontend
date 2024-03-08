@@ -1,19 +1,42 @@
 import React, { useState } from 'react';
 import './Login.css'; // Import the CSS file for styling
 
+const backend_url = 'http://127.0.0.1:8000/';
+
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Username:', username);
-    console.log('Password:', password);
-    setUsername('');
-    setPassword('');
-  };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-  return (
+        try {
+            const response = await fetch(backend_url + 'login/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                }),
+                headers: {
+                    'Content-Type': 'application/json' // Set Content-Type to application/json
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.error('Login failed');
+            }
+
+            setUsername('');
+            setPassword('');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    return (
     <div id='login-page'>
         <div id='header'><h1>Im-Museum</h1></div>
         <div className="login-container">
@@ -48,9 +71,7 @@ const Login = () => {
             </div>
         </div>
     </div>
-);
-
-
+    );
 };
 
 export default Login;

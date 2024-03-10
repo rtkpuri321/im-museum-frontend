@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css'; // Import the CSS file for styling
 
 const backend_url = 'http://127.0.0.1:8000/';
@@ -6,6 +7,7 @@ const backend_url = 'http://127.0.0.1:8000/';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,6 +27,8 @@ const Login = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
+                // Redirect to the home page
+                navigate('/home');
             } else {
                 console.error('Login failed');
             }

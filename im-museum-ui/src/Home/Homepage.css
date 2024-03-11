@@ -1,0 +1,71 @@
+/* Homepage.css */
+
+/* Header styles */
+.header {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input {
+    width: 200px;
+    padding: 8px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+  }
+  
+  .icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icons > * {
+    margin-left: 10px;
+  }
+  
+  /* Main content styles */
+  main {
+    padding: 20px;
+  }
+  
+  .add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  /* Profile section styles */
+  .profile-section {
+    background-color: #fff; /* White background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .profile-section h2 {
+    margin-bottom: 10px;
+  }
+  

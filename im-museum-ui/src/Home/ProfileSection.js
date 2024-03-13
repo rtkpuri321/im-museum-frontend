@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './ProfileSection.css'; // Import CSS file for styling
 
 const backend_url = 'http://127.0.0.1:8000/';
 
@@ -32,23 +33,25 @@ function ProfileSection() {
   return (
     <div className="profile-section">
       {userData ? (
-        <div>
-          <p>ID: {userData.id}</p>
-          <p>Mobile No: {userData.mobile_no || 'N/A'}</p>
-          <p>Username: {userData.username}</p>
-          <p>Email: {userData.email}</p>
-          <p>Account No: {userData.account_no || 'N/A'}</p>
-          <p>IFSC: {userData.ifsc || 'N/A'}</p>
-          <p>VPA: {userData.vpa || 'N/A'}</p>
-          <p>Subscribers Count: {userData.subscribers_count || 'N/A'}</p>
-          <p>Status Flag: {userData.status_flag}</p>
-          <p>Subscribers: {userData.subscribers.join(', ') || 'None'}</p>
-          <p>Subscribed To: {userData.subscribed_to.join(', ') || 'None'}</p>
+        <div className="profile-info">
+          <div className="avatar">
+            <img src={userData.avatarUrl} alt="Avatar" />
+            <p>{userData.user_name}</p>
+          </div>
+          <div className="user-details">
+            <h2>{userData.username}</h2>
+            <p>{userData.bio}</p>
+            <ul>
+              <li><strong>Posts:</strong> {userData.postsCount}</li>
+              <li><strong>Followers:</strong> {userData.followersCount}</li>
+              <li><strong>Following:</strong> {userData.followingCount}</li>
+            </ul>
+          </div>
         </div>
       ) : error ? (
-        <p>Error: {error}</p>
+        <p className="error-msg">Error: {error}</p>
       ) : (
-        <p>Loading...</p>
+        <p className="loading-msg">Loading...</p>
       )}
     </div>
   );

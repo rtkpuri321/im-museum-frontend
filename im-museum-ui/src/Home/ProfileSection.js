@@ -5,6 +5,7 @@ const backend_url = 'http://127.0.0.1:8000/';
 
 function ProfileSection() {
   const [userData, setUserData] = useState(null);
+  const [userImages, setUserImages] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ function ProfileSection() {
         const data = await response.json();
         if (data.status) {
           setUserData(data.user_data);
+          setUserImages(data.images);
         } else {
           throw new Error('API response status is not true.');
         }
@@ -34,24 +36,38 @@ function ProfileSection() {
     <div className="profile-section">
       {userData ? (
         <div className="profile-info">
-          <div className="avatar">
-            <img src={userData.avatarUrl} alt="Avatar" />
-            <p>{userData.user_name}</p>
-          </div>
           <div className="user-details">
-            <h2>{userData.username}</h2>
-            <p>{userData.bio}</p>
-            <ul>
-              <li><strong>Posts:</strong> {userData.postsCount}</li>
-              <li><strong>Followers:</strong> {userData.followersCount}</li>
-              <li><strong>Following:</strong> {userData.followingCount}</li>
-            </ul>
+            <div className="avatar">
+              <img src={userData.avatarUrl} alt="Avatar" />
+            </div>
+            <div className="user-info">
+              <h2>{userData.username}</h2>
+              <p>{userData.bio}</p>
+              <ul className="user-stats">
+                <li><strong>Posts:</strong> {userData.postsCount?userData.postsCount:0}</li>
+                <li><strong>Followers:</strong> {userData.followersCount?userData.followersCount:0}</li>
+                <li><strong>Following:</strong> {userData.followingCount?userData.followingCount:0}</li>
+              </ul>
+            </div>
           </div>
         </div>
       ) : error ? (
         <p className="error-msg">Error: {error}</p>
       ) : (
         <p className="loading-msg">Loading...</p>
+      )}
+      {userImages && (
+        <div className="profile-images">
+          <h3>My Image Museum</h3>
+          <div className="images-container">
+            {userImages.map(image => (
+              <div key={image.image_id} className="image-item">
+                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt={image.image_desc} />
+                <p>{image.image_desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

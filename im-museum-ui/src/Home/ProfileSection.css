@@ -45,3 +45,53 @@
     color: #666;
   }
   
+  .profile-info {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .user-details {
+    margin-right: 20px;
+  }
+  
+  .avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  .user-info h2 {
+    margin-top: 0;
+  }
+  
+  .images-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .image-item {
+    position: relative;
+  }
+  
+  .image-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .image-item p {
+    margin: 5px 0 0;
+  }
+
+  .user-stats {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Display items in a row */
+  }
+  
+  .user-stats li {
+    margin-right: 20px; /* Adjust as needed */
+  }
+  

@@ -1,0 +1,24 @@
+.modal {
+  position: fixed; /* Position the modal relative to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  z-index: 1000; /* Set a high z-index to ensure the modal appears above other content */
+  display: flex; /* Use flexbox to center the modal content */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+  width: 30px;
+  height: 34px;
+}

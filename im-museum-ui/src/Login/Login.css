@@ -37,14 +37,14 @@
     padding: 10px;
     font-size: 16px;
     color: #fff;
-    background-color: #bd081c; /* Pinterest red color */
+    background-color: #007bff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   
   button:hover {
-    background-color: #7f0e17; /* Darker shade of Pinterest red on hover */
+    background-color: #007bff;
   }
 
   #header {

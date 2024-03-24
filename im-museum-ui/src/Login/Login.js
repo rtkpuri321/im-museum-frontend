@@ -9,6 +9,11 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    const handleRegisterClick = () => {
+        // Navigate to the register page
+        navigate('/register');
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -66,7 +71,7 @@ const Login = () => {
                 <button type="submit">Login</button>
             </form>
             <div className="login-options">
-                <button className="register-button">Register</button><br/><br/>
+                <button onClick={handleRegisterClick} className="register-button">Register</button><br/><br/>
                 <div className="login-with-google">
                     <button className="google-login-button">
                         <i className="fa fa-google fa-fw"></i> Login with Google

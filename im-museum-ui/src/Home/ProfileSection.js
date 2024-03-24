@@ -38,7 +38,11 @@ function ProfileSection() {
         <div className="profile-info">
           <div className="user-details">
             <div className="avatar">
-              <img src={userData.avatarUrl} alt="Avatar" />
+            {userData.avatarUrl ? (
+                <img src={userData.avatarUrl} alt="Avatar" />
+            ) : (
+              <i className="fa fa-user"></i>
+            )}
             </div>
             <div className="user-info">
               <h2>{userData.username}</h2>

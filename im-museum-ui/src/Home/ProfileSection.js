@@ -66,7 +66,7 @@ function ProfileSection() {
           <div className="images-container">
             {userImages.map(image => (
               <div key={image.image_id} className="image-item">
-                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt={image.image_desc} />
+                <img src={image.converted_image_link} alt={image.image_desc} />
                 <p>{image.image_desc}</p>
               </div>
             ))}

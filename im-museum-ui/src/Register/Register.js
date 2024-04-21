@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import './Register.css';
+import { useNavigate } from 'react-router-dom';
+
+const backend_url = 'http://127.0.0.1:8000/';
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +17,7 @@ const Register = () => {
 
   const [repasswordError, setRepasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +28,7 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if password and retype password match
@@ -32,8 +37,31 @@ const Register = () => {
       return;
     }
     setRepasswordError('');
-    // Handle form submission (e.g., send data to server)
-    console.log(formData);
+
+    try {
+        const response = await fetch(backend_url + 'register/', {
+            method: 'POST',
+            body: JSON.stringify({
+                email: formData.email,
+                username: formData.username,
+                password: formData.password,
+            }),
+            headers: {
+                'Content-Type': 'application/json' // Set Content-Type to application/json
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            // Redirect to the home page
+            navigate('/');
+        } else {
+            console.error('Register failed');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
   };
 
   return (

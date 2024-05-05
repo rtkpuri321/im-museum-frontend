@@ -7,6 +7,8 @@ import ProfileSection from './ProfileSection';
 import './Homepage.css';
 import './Modal.css';
 
+const backend_url='http://127.0.0.1:8000/';
+
 function Home() {
   const [isProfileActive, setIsProfileActive] = useState(false);
   const [showModal, setShowModal] = useState(false); // State variable for modal toggle
@@ -18,13 +20,35 @@ function Home() {
   };
 
   const handleSubmit = () => {
-    // Handle image submission logic here
-    console.log('Image:', image);
-    console.log('Description:', description);
-    // Reset state and close modal
-    setImage(null);
-    setDescription('');
-    setShowModal(false);
+      // Create a new FormData object
+      const formData = new FormData();
+      formData.append('image', image); // Append the image file to the FormData
+      formData.append('image_desc', description); // Append the description to the FormData
+
+      // Send a POST request to the backend API
+      fetch(backend_url + 'add-image/', {
+          method: 'POST',
+          body: formData,
+      })
+      .then(response => {
+          if (response.ok) {
+              // Image uploaded successfully
+              console.log("Image uploaded successfully!");
+          } else {
+              // Failed to upload image
+              throw new Error("Failed to upload image.");
+          }
+      })
+      .catch(error => {
+          console.error('Error uploading image:', error);
+      })
+      .finally(() => {
+          // Clear the image and description inputs
+          setImage(null);
+          setDescription('');
+          // Close the modal
+          setShowModal(false);
+      });
   };
 
   const toggleModal = () => {

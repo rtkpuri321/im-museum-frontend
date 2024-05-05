@@ -1,0 +1,48 @@
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Ensures equal spacing between columns */
+  }
+  
+  .image-item-grid {
+    width: calc(33.33% - 10px); /* Adjust width to fit 3 items per row with spacing */
+    margin-bottom: 20px;
+  }
+  
+  .image-post-grid {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ensure each image-post occupies full width */
+  }
+  
+  .image-content-grid {
+    width: 100%;
+    position: relative;
+    padding-bottom: 100%; /* 1:1 aspect ratio (square) */
+    overflow: hidden;
+  }
+  
+  .image-content-grid img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire space */
+  }
+    
+  .interaction-grid {
+    margin-top: 10px;
+  }
+  
+  .action-buttons-grid {
+    display: flex;
+  }
+  
+  .action-buttons-grid button,
+  .action-buttons-grid input[type="text"] {
+    margin-right: 10px; /* Adjust as needed */
+  }
+  

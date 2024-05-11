@@ -16,7 +16,7 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         try {
             const response = await fetch(backend_url + 'login/', {
                 method: 'POST',
@@ -25,25 +25,30 @@ const Login = () => {
                     password: password,
                 }),
                 headers: {
-                    'Content-Type': 'application/json' // Set Content-Type to application/json
+                    'Content-Type': 'application/json'
                 }
             });
-
+    
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                const { access_token } = data; // Assuming the access token is returned in the response data
+    
+                // Set the access token in cookies with an expiry time
+                const expiryDate = new Date(Date.now() + (data.expires_in * 1000)); // Convert seconds to milliseconds
+                document.cookie = `access_token=${access_token}; expires=${expiryDate.toUTCString()}; path=/`;
+    
                 // Redirect to the home page
                 navigate('/home');
             } else {
                 console.error('Login failed');
             }
-
+    
             setUsername('');
             setPassword('');
         } catch (error) {
             console.error('Error:', error);
         }
-    };
+    };    
 
     return (
     <div id='login-page'>

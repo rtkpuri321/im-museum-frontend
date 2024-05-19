@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiSearch, FiBell, FiUser, FiHome } from 'react-icons/fi'; // Import FiUser for profile icon
+import { FiSearch, FiUser, FiHome, FiLogOut } from 'react-icons/fi'; // Import FiUser for profile icon
+import { useNavigate } from 'react-router-dom';
 import { RiAddLine } from 'react-icons/ri';
 import ImageGrid from './ImageGrid';
 import ProfileSection from './ProfileSection';
+import fetchWithToken from '../FetchWithToken';
 import './Homepage.css';
 import './Modal.css';
 
@@ -14,6 +16,7 @@ function Home() {
   const [showModal, setShowModal] = useState(false); // State variable for modal toggle
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -26,7 +29,7 @@ function Home() {
       formData.append('image_desc', description); // Append the description to the FormData
 
       // Send a POST request to the backend API
-      fetch(backend_url + 'add-image/', {
+      fetchWithToken(backend_url + 'add-image/', {
           method: 'POST',
           body: formData,
       })
@@ -59,6 +62,23 @@ function Home() {
     setIsProfileActive(!isProfileActive);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    // Split the cookies string into individual cookies
+    var cookies = document.cookie.split(";");
+
+    // Loop through each cookie and set its expiration date in the past to delete it
+    cookies.forEach(function(cookie) {
+      var cookieParts = cookie.split("=");
+      var cookieName = cookieParts[0].trim();
+      document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    });
+
+    // Redirect to the login page
+    navigate('/');
+  };
+
   return (
     <div>
       <header className="header">
@@ -68,12 +88,12 @@ function Home() {
           <FiSearch />
         </div>
         <div className="icons">
-          <FiBell />
           {isProfileActive ? (
             <FiHome onClick={toggleProfile} /> // Home icon when profile is active
           ) : (
             <FiUser onClick={toggleProfile} /> // Profile icon when profile is not active
           )}
+          <FiLogOut onClick={handleLogout} >logout</FiLogOut>
         </div>
       </header>
       <main>

@@ -1,5 +1,6 @@
 // ImageGrid.js
 import React, { useState, useEffect } from 'react';
+import fetchWithToken from '../FetchWithToken';
 import './ImageGrid.css';
 
 const backend_url = 'http://127.0.0.1:8000/';
@@ -10,7 +11,7 @@ function ImageGrid() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(backend_url + 'get-image/', {
+        const response = await fetchWithToken(backend_url + 'get-image/', {
           method: 'GET'
         });
         if (!response.ok) {
@@ -33,7 +34,7 @@ function ImageGrid() {
   const handleLike = async (imageId) => {
       try {
           // Send a POST request to the backend API to like or unlike the image
-          const response = await fetch(backend_url + 'image/like/', {
+          const response = await fetchWithToken(backend_url + 'image/like/', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import fetchWithToken from '../FetchWithToken';
 import './ProfileSection.css'; // Import CSS file for styling
 
 const backend_url = 'http://127.0.0.1:8000/';
@@ -13,7 +14,7 @@ function ProfileSection() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(backend_url + 'user-details/', {
+        const response = await fetchWithToken(backend_url + 'user-details/', {
           method: 'GET'
         });
         if (!response.ok) {
@@ -43,7 +44,7 @@ function ProfileSection() {
   const handleLike = async (imageId) => {
       try {
           // Send a POST request to the backend API to like or unlike the image
-          const response = await fetch(backend_url + 'image/like/', {
+          const response = await fetchWithToken(backend_url + 'image/like/', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -103,7 +104,7 @@ function ProfileSection() {
 
   const AddInterest = async () => {
     try {
-      const response = await fetch(backend_url+'add-user-interest/', {
+      const response = await fetchWithToken(backend_url+'add-user-interest/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

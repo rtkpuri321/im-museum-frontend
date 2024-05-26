@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiSearch, FiUser, FiHome, FiLogOut } from 'react-icons/fi'; // Import FiUser for profile icon
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiSearch, FiUser, FiHome, FiLogOut } from 'react-icons/fi';
 import { RiAddLine } from 'react-icons/ri';
 import ImageGrid from './ImageGrid';
 import ProfileSection from './ProfileSection';
 import fetchWithToken from '../FetchWithToken';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Homepage.css';
 import './Modal.css';
 
-const backend_url='http://127.0.0.1:8000/';
+const backend_url = 'http://127.0.0.1:8000/';
 
 function Home() {
   const [isProfileActive, setIsProfileActive] = useState(false);
@@ -23,34 +24,51 @@ function Home() {
   };
 
   const handleSubmit = () => {
-      // Create a new FormData object
-      const formData = new FormData();
-      formData.append('image', image); // Append the image file to the FormData
-      formData.append('image_desc', description); // Append the description to the FormData
+    // Create a new FormData object
+    const formData = new FormData();
+    formData.append('image', image); // Append the image file to the FormData
+    formData.append('image_desc', description); // Append the description to the FormData
 
-      // Send a POST request to the backend API
-      fetchWithToken(backend_url + 'add-image/', {
-          method: 'POST',
-          body: formData,
-      })
+    // Send a POST request to the backend API
+    fetchWithToken(backend_url + 'add-image/', {
+      method: 'POST',
+      body: formData,
+    })
       .then(response => {
-          if (response.ok) {
-              // Image uploaded successfully
-              console.log("Image uploaded successfully!");
-          } else {
-              // Failed to upload image
-              throw new Error("Failed to upload image.");
-          }
+        if (response.ok) {
+          // Image uploaded successfully
+          toast.success('Image uploaded successfully!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        } else {
+          // Failed to upload image
+          throw new Error("Failed to upload image.");
+        }
       })
       .catch(error => {
-          console.error('Error uploading image:', error);
+        toast.error('Error uploading image: ' + error.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        console.error('Error uploading image:', error);
       })
       .finally(() => {
-          // Clear the image and description inputs
-          setImage(null);
-          setDescription('');
-          // Close the modal
-          setShowModal(false);
+        // Clear the image and description inputs
+        setImage(null);
+        setDescription('');
+        // Close the modal
+        setShowModal(false);
       });
   };
 
@@ -75,8 +93,20 @@ function Home() {
       document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     });
 
+    toast.success('Never Say Never, See you soon!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
     // Redirect to the login page
-    navigate('/');
+    setTimeout(() => {
+      navigate('/');
+    }, 3000);
   };
 
   return (
@@ -111,6 +141,7 @@ function Home() {
           </div>
         )}
       </main>
+      <ToastContainer />
     </div>
   );
 }

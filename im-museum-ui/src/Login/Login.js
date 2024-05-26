@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Login.css'; // Import the CSS file for styling
 
 const backend_url = 'http://127.0.0.1:8000/';
@@ -31,21 +33,54 @@ const Login = () => {
     
             if (response.ok) {
                 const data = await response.json();
-                const { access_token } = data; // Assuming the access token is returned in the response data
+                const { access_token, expires_in } = data; // Assuming the access token is returned in the response data
     
                 // Set the access token in cookies with an expiry time
-                const expiryDate = new Date(Date.now() + (data.expires_in * 1000)); // Convert seconds to milliseconds
+                const expiryDate = new Date(Date.now() + (expires_in * 1000)); // Convert seconds to milliseconds
                 document.cookie = `access_token=${access_token}; expires=${expiryDate.toUTCString()}; path=/`;
     
-                // Redirect to the home page
-                navigate('/home');
+                // Show a success toaster
+                toast.success('Welcome to Im-Museum!', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+    
+                // Redirect to the home page after a delay
+                setTimeout(() => {
+                    navigate('/home');
+                }, 5000);
             } else {
+                // Show an error toaster
+                const data = await response.json();
+                toast.error(data.error, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 console.error('Login failed');
             }
     
             setUsername('');
             setPassword('');
         } catch (error) {
+            toast.error('An error occurred', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             console.error('Error:', error);
         }
     };    
@@ -84,6 +119,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
+        <ToastContainer />
     </div>
     );
 };

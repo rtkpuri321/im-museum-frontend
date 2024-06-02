@@ -10,6 +10,8 @@ function ProfileSection() {
   const [error, setError] = useState(null);
   const [interests, setInterests] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [profilePicModalVisible, setProfilePicModalVisible] = useState(false);
+  const [profilePic, setProfilePic] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -127,6 +129,42 @@ function ProfileSection() {
     }
   };
   
+  const openProfilePicModal = () => {
+    setProfilePicModalVisible(true);
+  };
+
+  const closeProfilePicModal = () => {
+    setProfilePicModalVisible(false);
+    setProfilePic(null);
+  };
+
+  const handleProfilePicChange = (e) => {
+    setProfilePic(e.target.files[0]);
+  };
+
+  const handleProfilePicSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!profilePic) return;
+
+    const formData = new FormData();
+    formData.append('profile_pic', profilePic);
+
+    try {
+      const response = await fetchWithToken(backend_url + 'update-profile-pic/', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload profile picture');
+      }
+
+      closeProfilePicModal();
+    } catch (error) {
+      console.error('Error uploading profile picture:', error.message);
+    }
+  };
 
   return (
     <div className="profile-section">
@@ -154,11 +192,14 @@ function ProfileSection() {
         <div className="profile-info">
           <div className="user-details">
             <div className="avatar">
-              {userData.avatarUrl ? (
-                <img src={userData.avatarUrl} alt="Avatar" />
-              ) : (
-                <i className="fa fa-user"></i>
-              )}
+              <div className="profile-pic-container">
+                {userData.profile_pic ? (
+                  <img src={userData.profile_pic} alt="Avatar" />
+                ) : (
+                  <i className="fa fa-user"></i>
+                )}
+                <button className='update-profile-pic-btn' onClick={openProfilePicModal}>Update Profile Picture</button>
+              </div>
             </div>
             <div className="user-info">
               <h2>{userData.username}</h2>
@@ -210,6 +251,18 @@ function ProfileSection() {
                 </div>
               </div>         
             ))}
+          </div>
+        </div>
+      )}
+      {profilePicModalVisible && (
+        <div className="modal">
+          <div className="modal-content">
+            <button className="close" onClick={closeProfilePicModal}>&times;</button>
+            <h2>Upload Profile Picture</h2>
+            <form onSubmit={handleProfilePicSubmit}>
+              <input type="file" accept="image/*" onChange={handleProfilePicChange} />
+              <button type="submit">Upload</button>
+            </form>
           </div>
         </div>
       )}

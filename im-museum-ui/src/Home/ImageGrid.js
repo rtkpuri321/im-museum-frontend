@@ -90,7 +90,7 @@ function ImageGrid() {
     }
   };
 
-  const handleShare = (imageUrl) => {
+  const handleDownload = (imageUrl) => {
     // Implement share functionality as per your requirements
   };
 
@@ -132,6 +132,14 @@ function ImageGrid() {
         userImages.map(image => (
           <div key={image.image_id} className="image-item-grid">
             <div className="image-post-grid">
+              <div className="user-info">
+                    {image.profile_pic ? (
+                      <img id="post_owner_image" src={image.profile_pic} alt="Avatar" />
+                    ) : (
+                      <i id="post_owner_image_fa" className="fa fa-user"></i>
+                    )}
+                    <p>{image.username}</p>
+              </div>
               <div className="user-info-grid">
                 {/* Add user info here if needed */}
               </div>
@@ -143,7 +151,7 @@ function ImageGrid() {
                 <div className="action-buttons-grid">
                   <button onClick={() => handleLike(image.image_id)}>❤️ Like {image.image_likes ? `(${image.image_likes})` : ''}</button>
                   <button onClick={() => showComments(image.image_id)}>💬 Comments</button>
-                  <button onClick={() => handleShare(image.converted_image_link)}>📤 Share</button>
+                  <button onClick={() => handleDownload(image.converted_image_link)}>⬇️ Download</button>
                 </div>
               </div>
               <div className='add_comment-grid'>

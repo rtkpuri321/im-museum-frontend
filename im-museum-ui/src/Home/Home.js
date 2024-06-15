@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiSearch, FiUser, FiHome, FiLogOut } from 'react-icons/fi';
 import { RiAddLine } from 'react-icons/ri';
@@ -18,6 +18,8 @@ function Home() {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -109,13 +111,71 @@ function Home() {
     }, 3000);
   };
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetchWithToken(`${backend_url}search-user/?name=${encodeURIComponent(searchTerm)}`, {
+          method: 'GET',
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setFilteredUsers(data.data); // Assuming data is an array of users
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    if (searchTerm.trim() !== '') {
+      fetchUsers();
+    } else {
+      setFilteredUsers([]);
+    }
+  }, [searchTerm]);
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleInputBlur = () => {
+    setFilteredUsers([]); // Clear the search results when the input loses focus
+  };
+
   return (
     <div>
       <header className="header">
         <Link to="/home" className="title"><i>Im-Museum</i></Link>
         <div className="search-bar">
-          <input type="text" placeholder="Search" />
-          <FiSearch />
+        <div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              className="search-input"
+            />
+            <FiSearch style={{ marginLeft: '8px' }} />
+          </div>
+          {filteredUsers.length > 0 ? (
+            <div className="search-results">
+              {filteredUsers.map(user => (
+                <div key={user.id} className="tile">
+                  {user.profile_pic ? (
+                    <img id='user_img' src={user.profile_pic} alt="Avatar" />
+                  ) : (
+                    <i id='user_img_fa' className="fa fa-user"></i>
+                  )}
+                  <h3 style={{'color': 'black'}}>{user.username} ({user.user_name})</h3>
+                </div>
+              ))}
+            </div>
+          ): (
+            <div></div>
+          )}
+          </div>
         </div>
         <div className="icons">
           {isProfileActive ? (

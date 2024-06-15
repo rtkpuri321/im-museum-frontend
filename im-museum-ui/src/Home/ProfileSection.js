@@ -206,8 +206,7 @@ function ProfileSection() {
               <p>{userData.bio}</p>
               <ul className="user-stats">
                 <li><strong>Posts:</strong> {userData.postsCount ? userData.postsCount : 0}</li>
-                <li><strong>Followers:</strong> {userData.followersCount ? userData.followersCount : 0}</li>
-                <li><strong>Following:</strong> {userData.followingCount ? userData.followingCount : 0}</li>
+                <li><strong>Followers:</strong> {userData.subscribers_count ? userData.subscribers_count : 0}</li>
               </ul>
             </div>
           </div>
@@ -227,8 +226,8 @@ function ProfileSection() {
               <div key={image.image_id} className="image-item">
                 <div className="image-post">
                   <div className="user-info">
-                    {userData.avatarUrl ? (
-                      <img id="post_owner_image" src={userData.avatarUrl} alt="Avatar" />
+                    {userData.profile_pic ? (
+                      <img id="post_owner_image" src={userData.profile_pic} alt="Avatar" />
                     ) : (
                       <i id="post_owner_image_fa" className="fa fa-user"></i>
                     )}
